@@ -1,0 +1,2 @@
+const SUPABASE_URL = 'https://ahpynsfehrdswoujahnd.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFocHluc2ZlaHJkc3dvdWphaG5kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ5NzE1ODgsImV4cCI6MjA4MDU0NzU4OH0.R9yazU-9uEGE0qQLCbbAEOdRzGHiOYb1Md0JKrYb7vs';
