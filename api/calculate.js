@@ -1,8 +1,8 @@
-const axios = require("axios");
-const { JSDOM } = require("jsdom");
-const { createClient } = require("@supabase/supabase-js");
+import axios from "axios";
+import { JSDOM } from "jsdom";
+import { createClient } from "@supabase/supabase-js";
 
-// Initialize Supabase using environment variables
+// Initialize Supabase using environment variables (Vercel handles process.env automatically)
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
 // --- MASTER ANSWER KEYS ---
@@ -162,7 +162,7 @@ export default async function handler(req, res) {
         .from("cuet_scores")
         .select("id")
         .eq("application_no", candidateData.application_no)
-        .eq("subject", normalizedSubjectName) // Use normalized name for DB consistency
+        .eq("subject", normalizedSubjectName)
         .maybeSingle();
 
       if (!existingRecord) {
