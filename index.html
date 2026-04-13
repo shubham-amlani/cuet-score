@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CUET PG 2026 | Master Blaster Pro</title>
+    <title>CUET PG 2026 | Score Calculator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
@@ -38,7 +38,7 @@
           CUET PG <span class="text-indigo-500">PRO</span>
         </h1>
         <p class="text-slate-400 font-medium text-sm">
-          Official Score Calculator & Rank Predictor
+           Score Calculator & Rank Predictor (from platform records only)
         </p>
       </header>
 
@@ -210,11 +210,34 @@
         </div>
       </section>
 
-      <footer
-        class="mt-20 text-center text-slate-600 text-[10px] font-bold uppercase tracking-widest"
-      >
-        Developed by Shubham Amlani
-      </footer>
+      <section class="mt-20 border-t border-slate-800 pt-10">
+        <div class="glass rounded-3xl p-6 md:p-8 text-slate-500 text-xs leading-relaxed space-y-4">
+            <div class="flex items-center gap-2 text-indigo-400 font-bold uppercase tracking-widest text-[10px]">
+                <span class="p-1 bg-indigo-500/20 rounded">⚖️</span> Disclaimer & Privacy
+            </div>
+            
+            <p>
+                This application is a <strong>non-commercial hobby project</strong> created solely for the convenience of students. It is not affiliated with, authorized, or endorsed by the National Testing Agency (NTA), Digialm, or any governmental body. 
+            </p>
+
+            <p>
+                <strong>Data Usage:</strong> By using this tool, you acknowledge that your <strong>Candidate Name</strong> and <strong>Total Score</strong> will be stored in our database to generate real-time platform rankings and percentiles. We do <u>not</u> extract or store sensitive personal information such as Date of Birth, Category, or contact details.
+            </p>
+
+            <p>
+                <strong>Accuracy:</strong> Scores are calculated based on user-provided response sheets and internal answer keys. While we strive for 100% accuracy, results shown here should be treated as unofficial. Please refer to official sources for final results.
+            </p>
+
+            <p class="text-slate-400">
+                <strong>Take-down Policy:</strong> If you are a student and wish to have your data removed from the leaderboard, or if you represent an authority with concerns regarding this tool, please email us. We are committed to compliance and will take down the data or the entire application immediately upon a valid request.
+            </p>
+        </div>
+    </section>
+
+    <footer class="mt-10 mb-10 text-center text-slate-600 text-[10px] font-black uppercase tracking-[0.3em]">
+        Developed by Shubham Amlani<br/>
+        <a href="mailto:shubhamamlani104@gmail.com" class="text-indigo-500 hover:text-indigo-400 transition-colors mt-2 block lowercase tracking-normal font-medium">shubhamamlani104@gmail.com</a>
+    </footer>
     </div>
 
     <script>
