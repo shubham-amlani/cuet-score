@@ -242,7 +242,12 @@ export default async function handler(req, res) {
           if (key.includes("Option 4 ID :")) optionsMap["4"] = val;
         });
 
-      if (qId && status === "Answered") {
+      if (!qId) return;
+
+      const hasChosenOption =
+        chosenOptNum && chosenOptNum !== "--" && chosenOptNum.trim() !== "";
+
+      if (hasChosenOption) {
         metrics.attempted++;
         const chosenOptId = optionsMap[chosenOptNum];
         const correctOptId = activeAnswerKey[qId];
@@ -254,33 +259,53 @@ export default async function handler(req, res) {
           metrics.incorrect++;
           metrics.score -= 1;
         }
-      } else if (qId) {
+      } else {
         metrics.unattempted++;
       }
     });
 
     let rankInfo = null;
     if (candidateData.application_no !== "N/A") {
-      // Upsert Score
-      await supabase.from("cuet_scores").upsert(
-        [
-          {
-            application_no: candidateData.application_no,
-            candidate_name: candidateData.candidate_name,
-            roll_no: candidateData.roll_no,
-            test_date: candidateData.test_date,
-            subject: normalizedSubjectName,
-            total_attempted: metrics.attempted,
-            total_unattempted: metrics.unattempted,
-            total_correct: metrics.correct,
-            total_incorrect: metrics.incorrect,
-            total_score: metrics.score,
-          },
-        ],
-        { onConflict: "application_no, subject" }
-      );
+      const payload = {
+        application_no: candidateData.application_no,
+        candidate_name: candidateData.candidate_name,
+        roll_no: candidateData.roll_no,
+        test_date: candidateData.test_date,
+        subject: normalizedSubjectName,
+        total_attempted: metrics.attempted,
+        total_unattempted: metrics.unattempted,
+        total_correct: metrics.correct,
+        total_incorrect: metrics.incorrect,
+        total_score: metrics.score,
+      };
 
-      // Rank Logic for CS/IT only
+      // 1. Check if the record already exists
+      const { data: existingRecord } = await supabase
+        .from("cuet_scores")
+        .select("id")
+        .eq("application_no", candidateData.application_no)
+        .eq("subject", normalizedSubjectName)
+        .maybeSingle();
+
+      // 2. Explicitly Update or Insert based on the check
+      if (existingRecord) {
+        const { error: updateError } = await supabase
+          .from("cuet_scores")
+          .update(payload)
+          .eq("id", existingRecord.id);
+
+        if (updateError)
+          console.error("Supabase Update Error:", updateError.message);
+      } else {
+        const { error: insertError } = await supabase
+          .from("cuet_scores")
+          .insert([payload]);
+
+        if (insertError)
+          console.error("Supabase Insert Error:", insertError.message);
+      }
+
+      // 3. Rank Logic for CS/IT only (Runs after data is guaranteed stored)
       if (
         normalizedSubjectName === "Computer Science and Information Technology"
       ) {
